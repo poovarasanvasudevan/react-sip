@@ -313,7 +313,15 @@ export default class SipProvider extends React.Component<
       this.ua = null;
     }
 
-    const { host, port, pathname, secure, user, password, autoRegister } = this.props;
+    const {
+      host,
+      port,
+      pathname,
+      secure,
+      user,
+      password,
+      autoRegister,
+    } = this.props;
 
     if (!host || !port || !user) {
       this.setState({

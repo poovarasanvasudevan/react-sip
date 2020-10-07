@@ -1,11 +1,5 @@
 import * as JsSIP from 'jssip';
-import {
-  AnswerOptions,
-  HoldEvent,
-  RenegotiateOptions,
-  RTCSession,
-  TerminateOptions,
-} from 'jssip/lib/RTCSession';
+import { AnswerOptions, HoldEvent, RenegotiateOptions, RTCSession, TerminateOptions } from 'jssip/lib/RTCSession';
 import { IncomingRequest, OutgoingRequest } from 'jssip/lib/SIPMessage';
 import { CallOptions, UnRegisterOptions } from 'jssip/lib/UA';
 import * as PropTypes from 'prop-types';
@@ -112,11 +106,7 @@ export default class SipProvider extends React.Component<JsSipConfig, JsSipState
   static defaultProps = {
     host: null,
     port: null,
-<<<<<<< HEAD
-    pathname: "",
-=======
     pathname: '',
->>>>>>> 9b4301b2315532ddc13ab1cc608cea5a547a8f58
     secure: true,
     user: null,
     password: null,
@@ -220,8 +210,8 @@ export default class SipProvider extends React.Component<JsSipConfig, JsSipState
     if (window.document.getElementById('sip-provider-audio')) {
       throw new Error(
         `Creating two SipProviders in one application is forbidden. If that's not the case ` +
-        `then check if you're using "sip-provider-audio" as id attribute for any existing ` +
-        `element`,
+          `then check if you're using "sip-provider-audio" as id attribute for any existing ` +
+          `element`,
       );
     }
 
@@ -277,7 +267,7 @@ export default class SipProvider extends React.Component<JsSipConfig, JsSipState
 
   registerSip(): void {
     if (!this.ua) {
-      throw new Error('Calling registerSip is not allowed when JsSIP.UA isn\'t initialized');
+      throw new Error("Calling registerSip is not allowed when JsSIP.UA isn't initialized");
     }
     if (this.props.autoRegister) {
       throw new Error('Calling registerSip is not allowed when autoRegister === true');
@@ -292,7 +282,7 @@ export default class SipProvider extends React.Component<JsSipConfig, JsSipState
 
   unregisterSip(options?: UnRegisterOptions): void {
     if (!this.ua) {
-      throw new Error('Calling unregisterSip is not allowed when JsSIP.UA isn\'t initialized');
+      throw new Error("Calling unregisterSip is not allowed when JsSIP.UA isn't initialized");
     }
     if (this.props.autoRegister) {
       throw new Error('Calling registerSip is not allowed when autoRegister === true');
@@ -336,7 +326,7 @@ export default class SipProvider extends React.Component<JsSipConfig, JsSipState
       throw new Error(`Destination must be defined (${destination} given)`);
     }
     if (!this.ua) {
-      throw new Error('Calling startCall is not allowed when JsSIP.UA isn\'t initialized');
+      throw new Error("Calling startCall is not allowed when JsSIP.UA isn't initialized");
     }
     if (this.state.sipStatus !== SIP_STATUS_CONNECTED && this.state.sipStatus !== SIP_STATUS_REGISTERED) {
       throw new Error(
@@ -374,7 +364,7 @@ export default class SipProvider extends React.Component<JsSipConfig, JsSipState
 
   stopCall = (options?: TerminateOptions) => {
     if (!this.ua) {
-      throw new Error('Calling stopCall is not allowed when JsSIP.UA isn\'t initialized');
+      throw new Error("Calling stopCall is not allowed when JsSIP.UA isn't initialized");
     }
     this.setState({ callStatus: CALL_STATUS_STOPPING });
     this.ua.terminateSessions(options);
@@ -428,11 +418,8 @@ export default class SipProvider extends React.Component<JsSipConfig, JsSipState
       user,
       password,
       autoRegister,
-<<<<<<< HEAD
-=======
       inboundAudioDeviceId,
       outboundAudioDeviceId,
->>>>>>> 9b4301b2315532ddc13ab1cc608cea5a547a8f58
     } = this.props;
 
     if (!host || !port || !user) {
@@ -461,13 +448,7 @@ export default class SipProvider extends React.Component<JsSipConfig, JsSipState
     }
 
     try {
-<<<<<<< HEAD
-      const socket = new JsSIP.WebSocketInterface(
-        `${secure ? "wss" : "ws"}://${host}:${port}${pathname}`,
-      );
-=======
       const socket = new JsSIP.WebSocketInterface(`${secure ? 'wss' : 'ws'}://${host}:${port}${pathname}`);
->>>>>>> 9b4301b2315532ddc13ab1cc608cea5a547a8f58
       this.ua = new JsSIP.UA({
         uri: `sip:${user}@${host}`,
         password,
@@ -567,7 +548,17 @@ export default class SipProvider extends React.Component<JsSipConfig, JsSipState
       });
     });
 
-    ua.on('newRTCSession', ({ originator, session: rtcSession, request: rtcRequest }: { originator: 'local' | 'remote' | 'system', session: RTCSession, request: IncomingRequest | OutgoingRequest }) => {
+    ua.on(
+      'newRTCSession',
+      ({
+        originator,
+        session: rtcSession,
+        request: rtcRequest,
+      }: {
+        originator: 'local' | 'remote' | 'system';
+        session: RTCSession;
+        request: IncomingRequest | OutgoingRequest;
+      }) => {
         // @ts-ignore
         window.UA_SESSION = rtcSession;
         if (!this || this.ua !== ua) {
@@ -611,7 +602,6 @@ export default class SipProvider extends React.Component<JsSipConfig, JsSipState
         }
 
         this.setState({ rtcSession });
-
 
         rtcSession.on('failed', () => {
           if (this.ua !== ua) {
@@ -679,14 +669,16 @@ export default class SipProvider extends React.Component<JsSipConfig, JsSipState
               this.logger.debug('connection.addstream: set remoteAudio.srcObject', stream);
               remoteAudio.srcObject = stream;
 
-              remoteAudio.play()
+              remoteAudio
+                .play()
                 .then(() => {
                   this.logger.debug('remoteAudio: playing');
                   this.isPlaying = true;
-                }).catch((e) => {
-                this.logger.error('remoteAudio: not playing', e);
-                this.isPlaying = false;
-              });
+                })
+                .catch((e) => {
+                  this.logger.error('remoteAudio: not playing', e);
+                  this.isPlaying = false;
+                });
             }
           });
         });
@@ -703,7 +695,6 @@ export default class SipProvider extends React.Component<JsSipConfig, JsSipState
             navigator.mediaDevices
               .getUserMedia(constraints)
               .then((stream) => {
-
                 stream.getAudioTracks().forEach((track) => {
                   if (track) {
                     this.logger.debug(`AUDIO.INBOUND: Attaching track`, track);
@@ -722,7 +713,7 @@ export default class SipProvider extends React.Component<JsSipConfig, JsSipState
 
           // Set up DTMF
           this.setState({
-            dtmfSender: rtcSession.connection.getSenders().filter(x => x.dtmf)[0].dtmf,
+            dtmfSender: rtcSession.connection.getSenders().filter((x) => x.dtmf)[0].dtmf,
           });
 
           this.setState({ callStatus: CALL_STATUS_ACTIVE });
@@ -740,16 +731,10 @@ export default class SipProvider extends React.Component<JsSipConfig, JsSipState
   }
 
   private handleAutoAnswer() {
-    if (
-      this.state.callDirection === CALL_DIRECTION_INCOMING &&
-      this.props.autoAnswer
-    ) {
+    if (this.state.callDirection === CALL_DIRECTION_INCOMING && this.props.autoAnswer) {
       this.logger.log('Answer auto ON');
       this.answerCall();
-    } else if (
-      this.state.callDirection === CALL_DIRECTION_INCOMING &&
-      !this.props.autoAnswer
-    ) {
+    } else if (this.state.callDirection === CALL_DIRECTION_INCOMING && !this.props.autoAnswer) {
       this.logger.log('Answer auto OFF');
     } else if (this.state.callDirection === CALL_DIRECTION_OUTGOING) {
       this.logger.log('OUTGOING call');
@@ -762,7 +747,7 @@ export default class SipProvider extends React.Component<JsSipConfig, JsSipState
 
   callHold = (useUpdate = false): void => {
     if (!this.state.rtcSession) {
-      this.logger.warn('callHold: no-op as there\'s no active rtcSession');
+      this.logger.warn("callHold: no-op as there's no active rtcSession");
       return; // no-op
     }
 
@@ -781,7 +766,7 @@ export default class SipProvider extends React.Component<JsSipConfig, JsSipState
 
   renegotiate = (options?: RenegotiateOptions, done?: () => void) => {
     if (!this.state.rtcSession) {
-      this.logger.warn('renegotiate: no-op as there\'s no active rtcSession');
+      this.logger.warn("renegotiate: no-op as there's no active rtcSession");
       return; // no-op
     }
 
@@ -790,7 +775,7 @@ export default class SipProvider extends React.Component<JsSipConfig, JsSipState
 
   callUnhold = (useUpdate = false): void => {
     if (!this.state.rtcSession) {
-      this.logger.warn('callUnhold: no-op as there\'s no active rtcSession');
+      this.logger.warn("callUnhold: no-op as there's no active rtcSession");
       return; // no-op
     }
 
@@ -813,7 +798,7 @@ export default class SipProvider extends React.Component<JsSipConfig, JsSipState
 
   callToggleHold = (useUpdate = false): void => {
     if (!this.state.rtcSession) {
-      this.logger.warn('callToggleHold: no-op as there\'s no active rtcSession');
+      this.logger.warn("callToggleHold: no-op as there's no active rtcSession");
       return; // no-op
     }
 
@@ -835,7 +820,8 @@ export default class SipProvider extends React.Component<JsSipConfig, JsSipState
     }
   };
 
-  callToggleMuteMicrophone = () => this.state.callMicrophoneIsMuted ? this.callUnmuteMicrophone() : this.callMuteMicrophone();
+  callToggleMuteMicrophone = () =>
+    this.state.callMicrophoneIsMuted ? this.callUnmuteMicrophone() : this.callMuteMicrophone();
 
   private getRemoteAudioOrFail(): WebAudioHTMLMediaElement {
     if (!this.remoteAudio) {
@@ -843,7 +829,7 @@ export default class SipProvider extends React.Component<JsSipConfig, JsSipState
     }
 
     return this.remoteAudio;
-  };
+  }
 
   private createRemoteAudioElement(): WebAudioHTMLMediaElement {
     const id = 'sip-provider-audio';

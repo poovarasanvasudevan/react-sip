@@ -1,16 +1,21 @@
-# React SIP
+# Notice
 
-[![license](https://img.shields.io/github/license/callthemonline/react-sip.svg)](https://github.com/callthemonline/react-sip/blob/master/LICENSE)
-[![npm version](https://img.shields.io/npm/v/react-sip.svg)](https://www.npmjs.com/package/react-sip)
-[![npm downloads](https://img.shields.io/npm/dy/react-sip.svg)](https://www.npmjs.com/package/react-sip)
-[![build status](https://travis-ci.org/callthemonline/react-sip.svg?branch=master)](https://travis-ci.org/callthemonline/react-sip)
+Please note that this is just a version of [react-sip](https://github.com/callthemonline/react-sip)
+with pull requests [#27](https://github.com/callthemonline/react-sip/pull/27) and [#28](https://github.com/callthemonline/react-sip/pull/28)
+merged. We are primarily hosting it on NPM for our own use, but feel free
+to include this in your project if you need any of those features.
+
+All changes are made by [evercall](https://evercall.dk) for our own use,
+and we do not provide any kind of support for react-sip.
+
+# React SIP
 
 React wrapper for [jssip](https://github.com/versatica/JsSIP).
 
 ## Installation
 
 ```bash
-npm install react-sip
+npm install @evercall/react-sip
 ```
 
 There is no need to install `jssip` as it is a dependency of `react-sip`.
@@ -18,7 +23,7 @@ There is no need to install `jssip` as it is a dependency of `react-sip`.
 ## Usage
 
 ```js
-import { SipProvider } from 'react-sip';
+import { SipProvider } from '@evercall/react-sip';
 import App from './components/App';
 
 ReactDOM.render(
@@ -26,6 +31,7 @@ ReactDOM.render(
     host="sip.example.com"
     port={7443}
     pathname="/ws" // Path in socket URI (e.g. wss://sip.example.com:7443/ws); "" by default
+    secure={true} // if true, the connection will be made over `wss://` else it will default to `ws://`
     user="alice"
     password={sipPassword} // usually required (e.g. from ENV or props)
     autoRegister={true} // true by default, see jssip.UA option register
@@ -41,6 +47,8 @@ ReactDOM.render(
       { urls: 'turn:example.com', username: 'foo', credential: '1234' }
     ]}
     debug={false} // whether to output events to console; false by default
+    incomingAudioDeviceId={"default"} // default, or a deviceId obtained from navigator.mediaDevices.enumerateDevices()
+    outboundAudioDeviceId={"default"} // default, or a deviceId obtained from navigator.mediaDevices.enumerateDevices()
   >
     <App />
   </SipProvider>
@@ -61,6 +69,7 @@ Child components get access to this context:
   answerCall: PropTypes.func,
   startCall: PropTypes.func,
   stopCall: PropTypes.func,
+  sendDTMF: PropTypes.func,
 }
 ```
 
@@ -119,6 +128,20 @@ To make calls, simply use these functions:
 
 The value for `destination` argument equals to the target SIP user without the host part (e.g. `+441234567890` or `bob`).
 The omitted host part is equal to host you’ve defined in `SipProvider` props (e.g. `sip.example.com`).
+
+During a call you can put it on hold using the `call.hold()` and `call.unhold()` functions. You can also get hold status with the `call.isOnHold` property.
+
+You may also mute your microphone during calls with the `call.toggleMuteMicrophone()`, `call.muteMicrophone` and `call.unmuteMicrophone` methods.
+You can check whether the microphone is used with the `call.microphoneIsMuted` property.
+
+To send DTMF tones while in-call, you can use this function:
+
+`sendDTMF(tones)`
+
+You can pass as many tones as you want in a `string` (e.g. `sendDTMF("1234")`).
+You may also specify `duration` and `interToneGap` in milliseconds, as `sendDTMF("1234", 100, 70)`. See [the MDN docs for `RTCDTMFSender.insertDTMF()`](https://developer.mozilla.org/en-US/docs/Web/API/RTCDTMFSender/insertDTMF) for further details.
+
+The DTMF implementation is **not** SIP INFO, but [RFC-4733](https://tools.ietf.org/html/rfc4733).
 
 ---
 

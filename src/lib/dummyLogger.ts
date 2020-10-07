@@ -1,15 +1,20 @@
-const dummyLogger = {
-  log: () => {
-    /**/
+import { Logger } from './types';
+
+const dummyLogger: Logger = {
+  debug(message?: any, ...optionalParams: any[]): void {
+    return;
   },
-  error: () => {
-    /**/
+  error(message?: any, ...optionalParams: any[]): void {
+    return;
   },
-  warn: () => {
-    /**/
+  info(message?: any, ...optionalParams: any[]): void {
+    return;
   },
-  debug: () => {
-    /**/
+  log(message?: any, ...optionalParams: any[]): void {
+    return;
+  },
+  warn(message?: any, ...optionalParams: any[]): void {
+    return;
   },
 };
 

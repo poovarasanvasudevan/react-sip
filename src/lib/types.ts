@@ -47,8 +47,6 @@ export const sipPropType = PropTypes.shape({
   pathname: PropTypes.string,
   secure: PropTypes.bool,
   user: PropTypes.string,
-  pathname: PropTypes.string,
-  secure: PropTypes.bool,
   password: PropTypes.string,
   autoRegister: PropTypes.bool,
   autoAnswer: PropTypes.bool,

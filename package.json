@@ -14,7 +14,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/Jhoy1992/react-sip"
+        "url": "https://github.com/poovarasanvasudevan/react-sip"
     },
     "keywords": [
         "react",
@@ -26,9 +26,9 @@
     "contributors": [],
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/Jhoy1992/react-sip/issues"
+        "url": "https://github.com/poovarasanvasudevan/react-sip/issues"
     },
-    "homepage": "https://github.com/Jhoy1992/react-sip#readme",
+    "homepage": "https://github.com/poovarasanvasudevan/react-sip#readme",
     "dependencies": {
         "@siwting/jssip": "^3.9.2",
         "prop-types": "^15.7.2"

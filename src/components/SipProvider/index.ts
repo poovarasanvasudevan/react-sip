@@ -1,7 +1,7 @@
-import * as JsSIP from 'jssip';
-import { AnswerOptions, HoldEvent, RenegotiateOptions, RTCSession, TerminateOptions } from 'jssip/lib/RTCSession';
-import { IncomingRequest, OutgoingRequest } from 'jssip/lib/SIPMessage';
-import { CallOptions, UnRegisterOptions } from 'jssip/lib/UA';
+import * as JsSIP from '@siwting/jssip';
+import { AnswerOptions, HoldEvent, RenegotiateOptions, RTCSession, TerminateOptions } from '@siwting/jssip/lib/RTCSession';
+import { IncomingRequest, OutgoingRequest } from '@siwting/jssip/lib/SIPMessage';
+import { CallOptions, UnRegisterOptions } from '@siwting/jssip/lib/UA';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import dummyLogger from '../../lib/dummyLogger';
@@ -81,6 +81,8 @@ export default class SipProvider extends React.Component<JsSipConfig, JsSipState
     sendDTMF: PropTypes.func,
     audioSinkId: PropTypes.string,
     setAudioSinkId: PropTypes.func,
+    mute: PropTypes.func,
+    unMute: PropTypes.func,
   };
 
   static propTypes = {

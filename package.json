@@ -22,7 +22,7 @@
         "jssip",
         "webrtc"
     ],
-    "author": "Jhonatan Ascari",
+    "author": "Poovarasan Vasudevan",
     "contributors": [],
     "license": "MIT",
     "bugs": {
@@ -30,7 +30,7 @@
     },
     "homepage": "https://github.com/Jhoy1992/react-sip#readme",
     "dependencies": {
-        "jssip": "^3.5.7",
+        "@siwting/jssip": "^3.9.2",
         "prop-types": "^15.7.2"
     },
     "peerDependencies": {
